@@ -8,6 +8,7 @@ const TodoNote = require('../models/TodoNote');
 
 async function initialize(){
   try{
+
     await sequelize.authenticate();
     console.log("DB connected"); 
 
@@ -21,6 +22,7 @@ async function initialize(){
 }
 
 initialize()
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -43,7 +45,7 @@ router.get(
 router.patch(
   '/api/todoNote/:Id', async function(req, res, next){
     try{
-      console.log("received status: ", req.body.isCompleted); 
+      // console.log("received status: ", req.body.isCompleted); 
       const todoNote = await TodoNote.update(
         {isCompleted: req.body.isCompleted}, 
         {where: {Id: req.params.Id}}
@@ -69,6 +71,7 @@ router.post(
     }
     catch(error){
       console.log("error occured in /api/todoNotes/add"); 
+      res.status(400).send('Failed'); 
     }
   }
 )
